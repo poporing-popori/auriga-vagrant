@@ -1,0 +1,29 @@
+- name: Install mysql packages.
+  apt: name={{ item }} state=present
+  with_items:
+    - mysql-common
+    - mysql-server
+    - mysql-client
+    - libmysqlclient-dev
+
+- name: Register mysql.
+  service: name=mysql state=started enabled=yes
+
+- name: Ensure MySQL databases are present.
+  mysql_db:
+    name: ragnarok
+    encoding: cp932
+    state: present
+
+- name: Create database user.
+  mysql_user:
+    name=raguser
+    password=password
+    priv=ragnarok.*:ALL
+    state=present
+
+- name: Create mysql include symlink.
+  file: src=/usr/include/mysql dest=/usr/local/include/mysql state=link
+
+- name: Create mysql lib symlink.
+  file: src=/usr/lib/mysql dest=/usr/local/lib/mysql state=link

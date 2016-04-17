@@ -1,0 +1,6 @@
+---
+- hosts: auriga_server
+  become: yes
+  user: vagrant
+  roles:
+    - mysql
