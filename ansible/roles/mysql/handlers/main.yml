@@ -1,0 +1,2 @@
+- name: Create schema
+  mysql_db: name="{{ mysql.db_name }}" state=import target=/opt/auriga/sql-files/main.sql
